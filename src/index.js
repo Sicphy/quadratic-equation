@@ -20,19 +20,20 @@ module.exports = function solveEquation(equation) {
             if(ur[i+1] === '+' || ur[i+1] === '-' || i == ur.length-1) {
                 c = eval(temp);
                 temp = '';
+                continue;
             }
 
-            if(ur[i+1] === '*')
-                if(ur[i+4] === '^') {
-                    i+=5;
+            if(ur[i+1] === '*') {
+                if (ur[i + 4] === '^') {
+                    i += 5;
                     a = eval(temp);
-                    temp = '';
                 }
                 else {
-                    i+=3;
+                    i += 3;
                     b = eval(temp);
-                    temp = '';
                 }
+                temp = '';
+            }
         }
     }
 
@@ -51,18 +52,15 @@ module.exports = function solveEquation(equation) {
     x1 = (-b + Math.sqrt(d))/(2*a);
     x2 = (-b - Math.sqrt(d))/(2*a);
 
-    if(x1 < 0)
-    x1 = parseInt(x1 - 0.5);
-else
-    x1 = parseInt(x1 + 0.5);
 
-    if(x2 < 0)
-        x2 = parseInt(x2 - 0.5);
-    else
-        x2 = parseInt(x2 + 0.5);
+    arr.push(Math.round(x1));
+    arr.push(Math.round(x2));
 
-    arr.push(parseInt(x1));
-    arr.push(parseInt(x2));
-
+    arr.sort(fun);
     return arr;
+}
+
+function fun(a, b) {
+    if (a > b) return 1;
+    if (a < b) return -1;
 }
